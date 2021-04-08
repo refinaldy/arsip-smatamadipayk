@@ -2,7 +2,9 @@
 
 use Illuminate\Support\Str;
 
-return [git 
+$DATABASE_URL = parse_url('postgres://xuojqmznlhgeqt:0bb243405ea86392dffd0de2077713a7d9f66727a7c5c8e5d4071f8d845293d5@ec2-54-87-34-201.compute-1.amazonaws.com:5432/d8o16enbqplhm0');
+
+return [
 
     /*
     |--------------------------------------------------------------------------
@@ -66,11 +68,11 @@ return [git
         'pgsql' => [
             'driver' => 'pgsql',
             'url' => env('DATABASE_URL'),
-            'host' => env('DB_HOST', '127.0.0.1'),
-            'port' => env('DB_PORT', '5432'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
+            'host' => $DATABASE_URL["host"],
+            'port' => $DATABASE_URL["port"],
+            'database' => ltrim($DATABASE_URL["path"], "/"),
+            'username' => $DATABASE_URL["user"],
+            'password' => $DATABASE_URL["pass"],
             'charset' => 'utf8',
             'prefix' => '',
             'prefix_indexes' => true,
