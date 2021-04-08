@@ -24,7 +24,13 @@ class StudentController extends Controller
      */
     public function index()
     {
-        return Student::all();
+        $messages[0][0] = [
+            'status' => 'SUCCESS',
+            'kode' => 200,
+            'pesan' => 'Berhasil mendapatkan data'
+        ];
+        $messages[0][1] = Student::all();
+        return $messages;
     }
 
     /**

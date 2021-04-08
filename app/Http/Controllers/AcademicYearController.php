@@ -21,7 +21,18 @@ class AcademicYearController extends Controller
      */
     public function index()
     {
-        return AcademicYear::all();
+        return AcademicYear::with('students')->get();
+    }
+
+    public function show($id)
+    {
+        $academicYear = AcademicYear::find($id)->with('students')->get();
+
+        if ($academicYear != null) {
+            return $academicYear;
+        } else {
+            return response()->json(['messages' => 'Data tidak ditemukan'], 404);
+        }
     }
 
     /**
