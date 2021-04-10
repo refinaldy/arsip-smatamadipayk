@@ -9,6 +9,7 @@ use App\Models\AcademicYear;
 use Illuminate\Http\Request;
 use App\Models\GraduatedDocument;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\StudentResource;
 use Illuminate\Support\Facades\Validator;
 
 class StudentController extends Controller
@@ -24,13 +25,8 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $messages[0][0] = [
-            'status' => 'SUCCESS',
-            'kode' => 200,
-            'pesan' => 'Berhasil mendapatkan data'
-        ];
-        $messages[0][1] = Student::all();
-        return $messages;
+        $students = Student::paginate(25);
+        return StudentResource::collection($students);
     }
 
     /**
@@ -108,7 +104,7 @@ class StudentController extends Controller
             ]];
         }
 
-        return response()->json($messages, 200);
+        return response()->json($messages, 201);
     }
 
     /**
@@ -122,7 +118,7 @@ class StudentController extends Controller
         $student = Student::find($id);
 
         if ($student != null) {
-            return $student;
+            return new StudentResource($student);
         } else {
             return response()->json(['messages' => 'Data tidak ditemukan'], 404);
         }
@@ -137,7 +133,6 @@ class StudentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $messages = [];
         //check autentikasi
         try {
             auth()->userOrFail();
@@ -176,7 +171,7 @@ class StudentController extends Controller
 
         $messages = [
             'status' => "SUCCESS",
-            'pesan' => "Data alumni berhasil disimpan",
+            'pesan' => "Data alumni berhasil diubah",
             'data' => [
                 'nama_lengkap' => request('nama_lengkap'),
                 'nisn' => request('nisn'),
@@ -190,7 +185,7 @@ class StudentController extends Controller
             ]
         ];
 
-        return response()->json($messages, 200);
+        return response()->json($messages, 202);
     }
 
     /**
@@ -219,9 +214,25 @@ class StudentController extends Controller
         }
     }
 
+    public function getGraduatedDocument($id)
+    {
+        //check autentikasi
+        try {
+            auth()->userOrFail();
+        } catch (\Tymon\JWTAuth\Exceptions\UserNotDefinedException $e) {
+            return response()->json('messages : Not Authorized', 403);
+        }
+
+        $student = new StudentResource(Student::find($id)->with('graduated_document')->first());
+        if ($student != null) {
+            return $student;
+        } else {
+            return response()->json(['messages' => 'Data tidak ditemukan'], 404);
+        }
+    }
+
     public function uploadGraduatedDocument($id, Request $request)
     {
-
         //check autentikasi
         try {
             auth()->userOrFail();
@@ -278,7 +289,7 @@ class StudentController extends Controller
             return response()->json($messages, 417);
         }
 
-        return response()->json($messages, 200);
+        return response()->json($messages, 201);
     }
 
     private function getValidationAttribute()

@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\AcademicYear;
 use Illuminate\Http\Request;
+use App\Http\Resources\StudentResource;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Resources\AcademicYearResource;
+use App\Http\Resources\AcademicYearCollection;
 
 class AcademicYearController extends Controller
 {
@@ -21,15 +24,22 @@ class AcademicYearController extends Controller
      */
     public function index()
     {
-        return AcademicYear::with('students')->get();
+        $academicYears = AcademicYearResource::collection(AcademicYear::paginate(10));
+        $tempMessages = 'Berhasil mendapatkan detail data tahun akademik ';
+        $messages = $this->getSuccessMessages('SUCCESS', $tempMessages, 200);
+        $messages['data'] = $academicYears;
+        return $messages;
     }
 
     public function show($id)
     {
-        $academicYear = AcademicYear::find($id)->with('students')->get();
+        $academicYears =  AcademicYearResource::make(AcademicYear::find($id)->with('students')->first());
 
-        if ($academicYear != null) {
-            return $academicYear;
+        if ($academicYears != null) {
+            $tempMessages = 'Berhasil mendapatkan detail data tahun akademik demgam id ' . $id;
+            $messages = $this->getSuccessMessages('SUCCESS', $tempMessages, 200);
+            $messages['data'] = $academicYears;
+            return $messages;
         } else {
             return response()->json(['messages' => 'Data tidak ditemukan'], 404);
         }
@@ -53,8 +63,8 @@ class AcademicYearController extends Controller
 
         // validasi request
         $validator = Validator::make(request()->all(), [
-            'tahun_awal' => 'required',
-            'tahun_akhir' => 'required'
+            'tahun_awal' => 'required|max:4',
+            'tahun_akhir' => 'required|max:4'
         ]);
 
         if ($validator->fails()) {
@@ -69,8 +79,8 @@ class AcademicYearController extends Controller
                 'status' => "FAILED",
                 'pesan' => "Data tahun ajaran salah atau sudah tersedia",
                 'data' => [
-                    'year_start' => request('tahun_awal'),
-                    'year_end' => request('tahun_akhir')
+                    'tahun_awal' => request('tahun_awal'),
+                    'tahun_akhir' => request('tahun_akhir')
                 ]
             ]];
 
@@ -88,8 +98,8 @@ class AcademicYearController extends Controller
             'status' => "SUCCESS",
             'pesan' => "Data tahun ajaran berhasil disimpan",
             'data' => [
-                'year_start' => request('tahun_awal'),
-                'year_end' => request('tahun_akhir')
+                'tahun_awal' => request('tahun_awal'),
+                'tahun_akhir' => request('tahun_akhir')
             ]
         ]];
 
@@ -137,7 +147,7 @@ class AcademicYearController extends Controller
             ]
         ]];
 
-        return response()->json($messages, 200);
+        return response()->json($messages, 201);
     }
 
     /**
@@ -163,5 +173,14 @@ class AcademicYearController extends Controller
         } else {
             return response()->json(['messages' => 'Data tahun ajaran tidak ditemukan'], 404);
         }
+    }
+
+    private function getSuccessMessages($status, $messages, $httpCode)
+    {
+        return $messages = [
+            'status' => $status,
+            'pesan' => $messages,
+            'kode' => $httpCode
+        ];
     }
 }

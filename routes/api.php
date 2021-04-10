@@ -22,12 +22,12 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::apiResource('tahun-akademik', 'AcademicYearController');
 
     Route::post('siswa/{id}/dokumen-kelulusan', 'StudentController@uploadGraduatedDocument');
-    Route::get('siswa/{id}/dokumen-kelulusan/', 'StudentController@dokumen');
+    Route::get('siswa/{id}/dokumen-kelulusan/', 'StudentController@getGraduatedDocument');
 
-    Route::apiResource('achievements', 'AchievementController');
-    Route::apiResource('achievements-rank', 'AchievementRankController');
-    Route::get('achievements-rank/all/{slug}', 'AchievementRankController@allRank'); // get all achievement by rank 
+    Route::apiResource('prestasi', 'AchievementController');
+    Route::apiResource('kategori-juara', 'AchievementRankController');
+    Route::get('kategori-juara/tag/{slug}', 'AchievementRankController@allRank'); // get all achievement by rank 
 
-    Route::apiResource('achievements-category', 'AchievementCategoryController');
-    Route::get('achievements-category/all/{slug}', 'AchievementCategoryController@allCategory'); // get all achievement by category
+    Route::apiResource('kategori-prestasi', 'AchievementCategoryController');
+    Route::get('kategori-prestasi/tag/{slug}', 'AchievementCategoryController@allCategory'); // get all achievement by category
 });
