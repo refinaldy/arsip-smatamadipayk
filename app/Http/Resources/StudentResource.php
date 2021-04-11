@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\AcademicYear;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class StudentResource extends JsonResource
@@ -14,6 +15,9 @@ class StudentResource extends JsonResource
      */
     public function toArray($request)
     {
+        $yearId = $this->academic_year_id;
+        $year = AcademicYear::find($yearId)->first();
+
         return [
             'nama_lengkap' => $this->full_name,
             'nisn' => $this->nisn,
@@ -26,7 +30,8 @@ class StudentResource extends JsonResource
             'id_tahun_akademik' => $this->academic_year_id,
             'foto_siswa' => $this->image,
             'ijazah' => $this->ijazah_file,
-            'skhun' => $this->skhun_file
+            'skhun' => $this->skhun_file,
+            'tahun_lulus' => $year->year_start . '/' . $year->year_end
         ];
     }
 }
