@@ -30,4 +30,8 @@ Route::group(['middleware' => 'api'], function ($router) {
 
     Route::apiResource('kategori-prestasi', 'AchievementCategoryController');
     Route::get('kategori-prestasi/tag/{slug}', 'AchievementCategoryController@allCategory'); // get all achievement by category
+
+    Route::get('kategori', 'AchievementController@getAllCategory');
+    Route::get('jumlah/siswa/', 'StudentController@countStudent');
+    Route::get('jumlah/prestasi', 'AchievementController@countAchievement');
 });

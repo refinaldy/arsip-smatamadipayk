@@ -20,12 +20,12 @@ class Achievement extends Model
         return $this->belongsToMany(Student::class);
     }
 
-    public function achievementRank()
+    public function achievement_rank()
     {
         return $this->belongsTo(AchievementRank::class);
     }
 
-    public function achievementCategory()
+    public function achievement_category()
     {
         return $this->belongsTo(AchievementCategory::class);
     }

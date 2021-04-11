@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\AchievementRank;
 use App\Models\AchievementCategory;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Resources\AchievementResource;
 
 class AchievementController extends Controller
 {
@@ -25,7 +26,7 @@ class AchievementController extends Controller
      */
     public function index()
     {
-        return Achievement::with('students:id,full_name,nisn')->get();
+        return AchievementResource::collection(Achievement::with('students:id,full_name,nisn')->get());
     }
 
     /**
@@ -275,5 +276,30 @@ class AchievementController extends Controller
         } else {
             return response()->json(['messages' => 'Data tidak ditemukan'], 404);
         }
+    }
+
+    public function getAllCategory()
+    {
+        $ranks = AchievementRank::all();
+        $category = AChievementCategory::all();
+        $allCategory = [
+            'juara' => $ranks,
+            'kategori' => $category
+        ];
+
+        return $allCategory;
+    }
+
+    public function countAchievement()
+    {
+
+        $data = ['jumlah_prestasi' => Achievement::all()->count()];
+
+        return response()->json([
+            'status' => 'success',
+            'kode' => '200',
+            'pesan' => 'Data berhasil didapatkan',
+            'data' => $data
+        ], 200);
     }
 }

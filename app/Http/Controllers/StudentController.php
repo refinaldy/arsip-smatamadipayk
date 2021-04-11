@@ -30,6 +30,19 @@ class StudentController extends Controller
         return StudentResource::collection($students);
     }
 
+    public function countStudent()
+    {
+
+        $data = ['jumlah_siswa' => Student::all()->count()];
+
+        return response()->json([
+            'status' => 'success',
+            'kode' => '200',
+            'pesan' => 'Data berhasil didapatkan',
+            'data' => $data
+        ], 200);
+    }
+
     /**
      * Store a newly created resource in storage.
      *
