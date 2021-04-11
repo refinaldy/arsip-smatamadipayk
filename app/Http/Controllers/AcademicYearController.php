@@ -189,7 +189,7 @@ class AcademicYearController extends Controller
 
         $year = AcademicYear::where('year_start', '=', $yearStart)
             ->where('year_end', '=', $yearEnd)->withCount('students')->get()->first();
-        // dd($year);
+        dd($year);
         return response()->json([
             'status' => 'success',
             'kode' => '200',
