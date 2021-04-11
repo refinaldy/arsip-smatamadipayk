@@ -34,4 +34,5 @@ Route::group(['middleware' => 'api'], function ($router) {
     Route::get('kategori', 'AchievementController@getAllCategory');
     Route::get('jumlah/siswa/', 'StudentController@countStudent');
     Route::get('jumlah/prestasi', 'AchievementController@countAchievement');
+    Route::get('jumlah/siswa/{year_start}/{year_end}', 'AcademicYearController@countStudentByYear');
 });

@@ -183,4 +183,18 @@ class AcademicYearController extends Controller
             'kode' => $httpCode
         ];
     }
+
+    public function countStudentByYear($yearStart, $yearEnd)
+    {
+
+        $year = AcademicYear::where('year_start', '=', $yearStart)
+            ->where('year_end', '=', $yearEnd)->withCount('students')->get()->first();
+        // dd($year);
+        return response()->json([
+            'status' => 'success',
+            'kode' => '200',
+            'pesan' => 'Data berhasil didapatkan',
+            'data' => $year->students_count
+        ], 200);
+    }
 }
