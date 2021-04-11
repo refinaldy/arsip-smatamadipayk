@@ -1,33 +1,33 @@
-<?php
+ <?php
 
-namespace App\Models;
+    namespace App\Models;
 
-use App\Models\Achievement;
-use App\Models\AcademicYear;
-use App\Models\GraduatedDocument;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+    use App\Models\Achievement;
+    use App\Models\AcademicYear;
+    use App\Models\GraduatedDocument;
+    use Illuminate\Database\Eloquent\Model;
+    use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Student extends Model
-{
-    use HasFactory;
-
-    protected $guarded = [
-        'id',
-    ];
-
-    public function achievements()
+    class Student extends Model
     {
-        return $this->belongsToMany(Achievement::class);
-    }
+        use HasFactory;
 
-    public function graduated_document()
-    {
-        return $this->hasOne(GraduatedDocument::class);
-    }
+        protected $guarded = [
+            'id',
+        ];
 
-    public function graduated_year()
-    {
-        return $this->belongsTo(AcademicYear::class);
+        public function achievements()
+        {
+            return $this->belongsToMany(Achievement::class);
+        }
+
+        public function graduated_document()
+        {
+            return $this->hasOne(GraduatedDocument::class);
+        }
+
+        public function graduated_year()
+        {
+            return $this->belongsTo(AcademicYear::class);
+        }
     }
-}

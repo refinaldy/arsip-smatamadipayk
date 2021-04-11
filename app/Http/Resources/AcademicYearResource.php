@@ -19,7 +19,7 @@ class AcademicYearResource extends JsonResource
         return [
             'id' => $this->id,
             'tahun_awal' => $this->year_start,
-            'tahun akhir' => $this->year_end,
+            'tahun_akhir' => $this->year_end,
             'siswa' => $this->students
 
         ];

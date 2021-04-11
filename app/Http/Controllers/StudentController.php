@@ -197,7 +197,7 @@ class StudentController extends Controller
     public function destroy($id)
     {
 
-        //check autentikasi
+        //check autentikasisss  
         try {
             auth()->userOrFail();
         } catch (\Tymon\JWTAuth\Exceptions\UserNotDefinedException $e) {
