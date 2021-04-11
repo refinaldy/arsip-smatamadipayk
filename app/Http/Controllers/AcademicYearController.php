@@ -189,12 +189,20 @@ class AcademicYearController extends Controller
 
         $year = AcademicYear::where('year_start', '=', $yearStart)
             ->where('year_end', '=', $yearEnd)->withCount('students')->get()->first();
-        dd($year);
-        return response()->json([
-            'status' => 'success',
-            'kode' => '200',
-            'pesan' => 'Data berhasil didapatkan',
-            'data' => $year->students_count
-        ], 200);
+        if ($year != null) {
+            return response()->json([
+                'status' => 'success',
+                'kode' => '200',
+                'pesan' => 'Data berhasil didapatkan',
+                'data' => $year->students_count
+            ], 200);
+        } else {
+            return response()->json([
+                'status' => 'failed',
+                'kode' => '404',
+                'pesan' => 'Tahun tidak ditemukan',
+                'tahun' => $yearStart . '/' . $yearEnd
+            ], 404);
+        }
     }
 }
