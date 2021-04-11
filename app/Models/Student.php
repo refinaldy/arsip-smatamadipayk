@@ -25,7 +25,7 @@ class Student extends Model
         return $this->hasOne(GraduatedDocument::class);
     }
 
-    public function graduated_year()
+    public function academic_year()
     {
         return $this->belongsTo(AcademicYear::class);
     }

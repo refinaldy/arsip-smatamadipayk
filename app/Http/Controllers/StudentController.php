@@ -25,7 +25,7 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $students = Student::with('graduated_year')->paginate(25);
+        $students = Student::with('academic_year')->paginate(25);
 
         return StudentResource::collection($students);
     }

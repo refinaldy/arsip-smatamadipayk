@@ -15,9 +15,6 @@ class StudentResource extends JsonResource
      */
     public function toArray($request)
     {
-        $yearId = $this->academic_year_id;
-        $year = AcademicYear::find($yearId)->first();
-
         return [
             'nama_lengkap' => $this->full_name,
             'nisn' => $this->nisn,
@@ -31,7 +28,7 @@ class StudentResource extends JsonResource
             'foto_siswa' => $this->image,
             'ijazah' => $this->ijazah_file,
             'skhun' => $this->skhun_file,
-            'tahun_lulus' => $year->year_start . '/' . $year->year_end
+            'tahun_lulus' => $this->academic_year->year_start . '/' . $this->academic_year->year_end
         ];
     }
 }
