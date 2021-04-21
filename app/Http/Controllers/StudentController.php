@@ -287,6 +287,8 @@ class StudentController extends Controller
             'status' => 'AVAILABLE',
         ]);
 
+
+
         if ($document) {
             $messages = [
                 'status' => "SUCCESS",
