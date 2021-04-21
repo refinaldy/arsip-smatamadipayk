@@ -25,8 +25,7 @@ class GraduatedDocumentResource extends JsonResource
             'slug' => $this->slug,
             'jurusan' => $this->major,
             'id_tahun_akademik' => $this->academic_year_id,
-            'foto_siswa' => $this->image,
-            'url_foto' => secure_asset('/images/student_images/' . $this->image),
+            'foto_siswa' => asset('/images/student_images/' . $this->image),
             'ijazah' => secure_asset('/images/graduated_document/' . $this->graduated_document->ijazah_file),
             'skhun' => secure_asset('/images/graduated_document/' . $this->graduated_document->skhun_file),
             'tahun_lulus' => $this->academic_year->year_start . '/' . $this->academic_year->year_end
