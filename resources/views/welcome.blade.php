@@ -398,7 +398,7 @@
     </style>
 </head>
 
-<img src="{{ asset('/images/foto_siswa/Foto-refinaldy-madras-1800018411.jpg') }}" alt="">
+<img src="{{ secure_asset('/images/foto_siswa/Foto-refinaldy-madras-1800018411.jpg') }}" alt="">
 
 <body class="antialiased">
     <div
