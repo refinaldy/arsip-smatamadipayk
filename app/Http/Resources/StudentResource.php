@@ -28,8 +28,8 @@ class StudentResource extends JsonResource
             'id_tahun_akademik' => $this->academic_year_id,
             'foto_siswa' => $this->image,
             'url_foto' => asset('/images/student_images/' . $this->image),
-            'ijazah' => $this->graduated_document()->ijazah,
-            'skhun' => $this->graduated_document()->skhun,
+            'ijazah' => $this->graduated_document()->ijazah_file,
+            'skhun' => $this->graduated_document()->skhun_file,
             'tahun_lulus' => $this->academic_year->year_start . '/' . $this->academic_year->year_end
         ];
     }
