@@ -11,6 +11,7 @@ use App\Models\GraduatedDocument;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\StudentResource;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Resources\GraduatedDocumentResource;
 
 class StudentController extends Controller
 {
@@ -237,7 +238,10 @@ class StudentController extends Controller
             return response()->json('messages : Not Authorized', 403);
         }
 
-        $student = new StudentResource(Student::find($id)->with('graduated_document')->first());
+
+
+        $student = new GraduatedDocumentResource(Student::find($id)->with('graduated_document')->first());
+
         if ($student != null) {
             return $student;
         } else {
