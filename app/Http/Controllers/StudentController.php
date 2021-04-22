@@ -320,6 +320,7 @@ class StudentController extends Controller
             'nis' => 'required',
             'jurusan' => 'required',
             'id_tahun' => 'required',
+            'tanggal_lahir' => 'required',
             'foto_siswa' => 'mimes:jpg,png|max:2048'
         ];
     }
