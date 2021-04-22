@@ -26,7 +26,7 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $students = Student::with('academic_year')->all();
+        $students = Student::with('academic_year')->get();
 
         return StudentResource::collection($students);
     }
