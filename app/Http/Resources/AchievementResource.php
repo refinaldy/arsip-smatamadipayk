@@ -17,7 +17,7 @@ class AchievementResource extends JsonResource
         return [
             'nama_acara' => $this->event_name,
             'penyelenggara' => $this->organizer,
-            'tanngal_acara' => $this->event_data,
+            'tanggal_acara' => $this->event_date,
             'slug' => $this->slug,
             'dokumentasi_acara' => $this->achievement_documentations,
             'piagam' => $this->achievement_charter,
