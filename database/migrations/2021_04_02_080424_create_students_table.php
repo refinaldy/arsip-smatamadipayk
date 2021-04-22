@@ -22,7 +22,7 @@ class CreateStudentsTable extends Migration
             $table->date('birth_date')->nullable();
             $table->enum('major', ['IPA', 'IPS']);
             $table->enum('gender', ['L', 'P'])->nullable();
-            $table->string('image')->nullable()->change();
+            $table->string('image');
             $table->string('slug');
             $table->unsignedBigInteger('academic_year_id');
             $table->foreign('academic_year_id')->references('id')->on('academic_years')->onDelete('cascade');
