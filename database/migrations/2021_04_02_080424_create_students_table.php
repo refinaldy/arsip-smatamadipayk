@@ -24,7 +24,6 @@ class CreateStudentsTable extends Migration
             $table->enum('gender', ['L', 'P'])->nullable();
             $table->string('image');
             $table->string('slug');
-
             $table->unsignedBigInteger('academic_year_id');
             $table->foreign('academic_year_id')->references('id')->on('academic_years')->onDelete('cascade');
             $table->timestamps();
