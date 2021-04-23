@@ -23,6 +23,8 @@ Route::group(['middleware' => 'api'], function ($router) {
 
     Route::post('siswa/{id}/dokumen-kelulusan', 'StudentController@uploadGraduatedDocument');
     Route::get('siswa/{id}/dokumen-kelulusan/', 'StudentController@getGraduatedDocument');
+    Route::delete('siswa/{id}/dokumen-kelulusan', 'StudentController@deleteGraduatedDocument');
+
 
     Route::apiResource('prestasi', 'AchievementController');
     Route::apiResource('kategori-juara', 'AchievementRankController');

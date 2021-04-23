@@ -238,9 +238,11 @@ class StudentController extends Controller
             return response()->json('messages : Not Authorized', 403);
         }
 
-
-
         $student = new GraduatedDocumentResource(Student::find($id)->with('graduated_document')->first());
+
+        if ($student->graduated_document === null) {
+            return response()->json(['messages' => 'Dokumen kelulusan belum diinputkan'], 404);
+        }
 
         if ($student != null) {
             return $student;
@@ -291,8 +293,6 @@ class StudentController extends Controller
             'status' => 'AVAILABLE',
         ]);
 
-
-
         if ($document) {
             $messages = [
                 'status' => "SUCCESS",
@@ -307,6 +307,41 @@ class StudentController extends Controller
         } else {
             $messages = ['status' => 'FAILED', 'pesan: "File ijazah gagal'];
             return response()->json($messages, 417);
+        }
+
+        return response()->json($messages, 201);
+    }
+
+    public function deleteGraduatedDocument($id, Request $request)
+    {
+        //check autentikasi
+        try {
+            auth()->userOrFail();
+        } catch (\Tymon\JWTAuth\Exceptions\UserNotDefinedException $e) {
+            return response()->json('messages : Not Authorized', 403);
+        }
+
+        $student = Student::find($id)->with('graduated_document')->first();
+
+        if ($student === null) {
+            $messages = ['status' => 'FAILED', 'pesan' => 'Data siswa tidak ditemukan'];
+            return response()->json($messages, 404);
+        }
+
+        if ($student->graduated_document != null) {
+            $document = $student->graduated_document()->delete();
+            if ($document) {
+                $messages = [
+                    'status' => "SUCCESS",
+                    'pesan' => "File ijazah dan SKHUN berhasil dihapus",
+                ];
+            } else {
+                $messages = ['status' => 'FAILED', 'pesan' => 'File ijazah gagal dihapus'];
+                return response()->json($messages, 404);
+            }
+        } else {
+            $messages = ['status' => 'FAILED', 'pesan: "File ijazah belum ada'];
+            return response()->json($messages, 404);
         }
 
         return response()->json($messages, 201);
