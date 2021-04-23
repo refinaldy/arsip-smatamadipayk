@@ -246,7 +246,7 @@ class StudentController extends Controller
             return response()->json('messages : Not Authorized', 403);
         }
 
-        $student = new GraduatedDocumentResource(Student::find($id)->with('graduated_document')->first());
+        $student = new GraduatedDocumentResource(Student::where('id', $id)->with('graduated_document')->first());
 
         if ($student->graduated_document === null) {
             return response()->json(['messages' => 'Dokumen kelulusan belum diinputkan'], 404);
