@@ -66,13 +66,22 @@ class StudentController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->messages(), 417);
         }
-        // nama lengkap, nisn, nis, tempat_lahir, tanggal_lahir, jenis_kelamin, slug, jurusan, tahun_lulus
+
+        $academicYear = AcademicYear::find(request('id_tahun'));
+
+        if ($academicYear === null) {
+            $messages = $this->failedMessages("Data tidak berhasil disimpan, karena tahun ajaran tidak ditemukan", request());
+            return response()->json($messages, 404);
+        }
+
         $imageName = request('foto_siswa');
 
         if (request('foto_siswa')) {
             $post_img = request('foto_siswa');
             $imageName = 'Foto-' . Str::slug(request('nama_lengkap'), '-') . '-' . request('nisn') . '.' . $post_img->extension();
             $post_img->move(public_path('images/student_images'), $imageName);
+        } else {
+            $imageName = 'default-profile.png';
         }
 
         $slug = Str::slug(request('nama_lengkap'), '-') . '-' . request('nisn');
@@ -81,12 +90,11 @@ class StudentController extends Controller
 
         if ($nisn > 0) {
             $messages = $this->failedMessages("Data tidak berhasil disimpan, karena nisn sudah pernah dipakai", request());
-            return response()->json($messages);
+            return response()->json($messages, 417);
         } else if ($nis > 0) {
             $messages = $this->failedMessages("Data tidak berhasil disimpan, karena nis sudah pernah dipakai", request());
-            return response()->json($messages);
+            return response()->json($messages, 417);
         } else {
-
             Student::create(
                 [
                     'full_name' => request('nama_lengkap'),
@@ -373,7 +381,7 @@ class StudentController extends Controller
                 'tempat_lahir' => $request->tempat_lahir,
                 'jenis_kelamin' => $request->jenis_kelamin,
                 'jurusan' => $request->jurusan,
-                'id_tahun_lulus' => $request->tahun_lulus
+                'id_tahun' => $request->id_tahun
             ]
         ];
         return $messages;

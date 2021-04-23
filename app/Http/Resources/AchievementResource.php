@@ -15,6 +15,7 @@ class AchievementResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'id' => $this->id,
             'nama_acara' => $this->event_name,
             'penyelenggara' => $this->organizer,
             'tanggal_acara' => $this->event_date,
