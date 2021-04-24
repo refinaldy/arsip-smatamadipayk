@@ -145,9 +145,9 @@ class AchievementController extends Controller
             $achievement = Achievement::find($attr)->with('students:id,full_name,nisn')->get();
         } else {
             $achievement = Achievement::where('slug', $attr)->with('students:id,full_name,nisn')->get();
-            if (empty($achievement->data)) {
-                return response()->json(['messages' => 'Data tidak ditemukan'], 404);
-            }
+            // if (empty($achievement->data)) {
+            //     return response()->json(['messages' => 'Data prestasi tidak ditemukan'], 404);
+            // }
         }
 
         if ($achievement != null) {
