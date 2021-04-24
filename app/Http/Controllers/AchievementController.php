@@ -144,10 +144,7 @@ class AchievementController extends Controller
         if (is_numeric($attr)) {
             $achievement = Achievement::find($attr)->with('students:id,full_name,nisn')->get();
         } else {
-            $achievement = Achievement::where('slug', $attr)->with('students:id,full_name,nisn')->get();
-            // if (empty($achievement->data)) {
-            //     return response()->json(['messages' => 'Data prestasi tidak ditemukan'], 404);
-            // }
+            $achievement = Achievement::where('slug', $attr)->with('students:id,full_name,nisn')->get()->first();
         }
 
         if ($achievement != null) {

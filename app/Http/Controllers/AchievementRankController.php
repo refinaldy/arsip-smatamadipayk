@@ -95,7 +95,7 @@ class AchievementRankController extends Controller
         if (is_numeric($attr)) {
             $achievementRank = AchievementRank::find($attr)->with('achievements')->get();
         } else {
-            $achievementRank = AchievementRank::where('slug', $attr)->with('achievements')->get();
+            $achievementRank = AchievementRank::where('slug', $attr)->with('achievements')->get()->first();
         }
 
         if ($achievementRank != null) {

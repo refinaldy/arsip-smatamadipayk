@@ -95,7 +95,7 @@ class AchievementCategoryController extends Controller
         if (is_numeric($attr)) {
             $achievementCategory = AchievementCategory::find($attr);
         } else {
-            $achievementCategory = AchievementCategory::where('slug', $attr)->with('achievements')->get();
+            $achievementCategory = AchievementCategory::where('slug', $attr)->with('achievements')->get()->first();
         }
 
         if ($achievementCategory != null) {
