@@ -18,8 +18,10 @@ Route::group(['middleware' => 'api'], function ($router) {
     });
 
     Route::apiResource('siswa', 'StudentController');
+    Route::get('siswa/{slug}, StudentController@show');
     Route::post('cari/siswa/', 'StudentController@search');
     Route::apiResource('tahun-akademik', 'AcademicYearController');
+    Route::get('tahun-akademik/{slug}, StudentController@show');
 
     Route::post('siswa/{id}/dokumen-kelulusan', 'StudentController@uploadGraduatedDocument');
     Route::get('siswa/{id}/dokumen-kelulusan/', 'StudentController@getGraduatedDocument');

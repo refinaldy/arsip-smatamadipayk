@@ -31,14 +31,26 @@ class AcademicYearController extends Controller
         return $messages;
     }
 
-    public function show($id)
+    public function show($attr)
     {
-        $academicYears =  AcademicYearResource::make(AcademicYear::find($id)->with('students')->first());
+        if (is_numeric($attr)) {
+            $academicYear =  AcademicYearResource::make(AcademicYear::where('id', $attr)->with('students'))->first();
+        } else {
+            $year = explode('-', $attr);
+            $yearStart = $year[0];
+            $yearEnd = $year[1];
+            $academicYear =  AcademicYearResource::make(AcademicYear::where('year_start', $yearStart)->where('year_end', $yearEnd)
+                ->with('students')->first());
+            if ($academicYear->resource === null) {
+                return response()->json(['messages' => 'Data tidak ditemukan'], 404);
+            }
+        }
 
-        if ($academicYears != null) {
-            $tempMessages = 'Berhasil mendapatkan detail data tahun akademik demgam id ' . $id;
+
+        if ($academicYear != null) {
+            $tempMessages = 'Berhasil mendapatkan detail data tahun akademik';
             $messages = $this->getSuccessMessages('SUCCESS', $tempMessages, 200);
-            $messages['data'] = $academicYears;
+            $messages['data'] = $academicYear;
             return $messages;
         } else {
             return response()->json(['messages' => 'Data tidak ditemukan'], 404);

@@ -136,9 +136,13 @@ class StudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($attr)
     {
-        $student = Student::find($id);
+        if (is_numeric($attr)) {
+            $student = Student::find($attr);
+        } else {
+            $student = Student::where('slug', $attr)->first();
+        }
 
         if ($student != null) {
             return new StudentResource($student);
