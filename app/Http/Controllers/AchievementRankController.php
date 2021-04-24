@@ -132,7 +132,7 @@ class AchievementRankController extends Controller
             return response()->json($validator->messages(), 417);
         }
 
-        $slug = 'prestasi-' . Str::slug(strtolower(request('kategori_juara')), '-');
+        $slug = Str::slug(strtolower(request('kategori_juara')));
         AchievementRank::find($id)->update(
             [
                 'rank' => strtolower(request('kategori_juara'))

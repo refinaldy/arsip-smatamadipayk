@@ -65,7 +65,7 @@ class AchievementCategoryController extends Controller
             return response()->json($messages, 413);
         }
 
-        $slug = 'prestasi-' . Str::slug(strtolower(request('kategori_prestasi')), '-');
+        $slug = Str::slug(strtolower(request('kategori_prestasi')));
         AchievementCategory::create(
             [
                 'category' => strtolower(request('kategori_prestasi')),
