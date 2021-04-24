@@ -25,16 +25,6 @@ class AchievementCategoryController extends Controller
         return AchievementCategory::with('achievements')->get();
     }
 
-    public function allCategory($slug)
-    {
-        $achievementCategory = AchievementCategory::where('slug', $slug)->with('achievements')->get();
-
-        if ($achievementCategory != null) {
-            return $achievementCategory;
-        } else {
-            return response()->json(['messages' => 'Data tidak ditemukan'], 404);
-        }
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -100,9 +90,13 @@ class AchievementCategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($attr)
     {
-        $achievementCategory = AchievementCategory::find($id);
+        if (is_numeric($attr)) {
+            $achievementCategory = AchievementCategory::find($attr);
+        } else {
+            $achievementCategory = AchievementCategory::where('slug', $attr)->with('achievements')->get();
+        }
 
         if ($achievementCategory != null) {
             return $achievementCategory;

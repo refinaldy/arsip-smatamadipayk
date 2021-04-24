@@ -150,7 +150,6 @@ class AchievementController extends Controller
             }
         }
 
-
         if ($achievement != null) {
             return $achievement;
         } else {

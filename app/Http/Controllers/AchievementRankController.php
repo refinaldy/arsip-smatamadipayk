@@ -89,9 +89,14 @@ class AchievementRankController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($attr)
     {
-        $achievementRank = AchievementRank::find($id)->with('achievements')->get();
+
+        if (is_numeric($attr)) {
+            $achievementRank = AchievementRank::find($attr)->with('achievements')->get();
+        } else {
+            $achievementRank = AchievementRank::where('slug', $attr)->with('achievements')->get();
+        }
 
         if ($achievementRank != null) {
             return $achievementRank;
@@ -100,16 +105,6 @@ class AchievementRankController extends Controller
         }
     }
 
-    public function allRank($slug)
-    {
-        $achievementRank = AchievementRank::where('slug', $slug)->with('achievements')->get();
-
-        if ($achievementRank != null) {
-            return $achievementRank;
-        } else {
-            return response()->json(['messages' => 'Data tidak ditemukan'], 404);
-        }
-    }
 
     /**
      * Update the specified resource in storage.
