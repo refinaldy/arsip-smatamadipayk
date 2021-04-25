@@ -14,6 +14,13 @@ class AchievementResource extends JsonResource
      */
     public function toArray($request)
     {
+        $documentations = explode(',',  $this->achievement_documentations);
+        $documentationsURL = array();
+        foreach ($documentations as $doc) {
+            array_push($documentationsURL, secure_asset('/images/achievement_documentation/' . $doc));
+        }
+
+
         return [
             'id' => $this->id,
             'nama_acara' => $this->event_name,
@@ -21,6 +28,7 @@ class AchievementResource extends JsonResource
             'tanggal_acara' => $this->event_date,
             'slug' => $this->slug,
             'dokumentasi_acara' => $this->achievement_documentations,
+            'link_dokumentasi' => $documentationsURL,
             'piagam' => $this->achievement_charter,
             'kategori_juara' => $this->achievement_rank->rank,
             'kategori_lomba' => $this->achievement_category->category,
