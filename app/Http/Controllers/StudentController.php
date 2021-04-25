@@ -368,7 +368,7 @@ class StudentController extends Controller
             'jurusan' => 'required',
             'id_tahun' => 'required',
             'tanggal_lahir' => 'required',
-            'foto_siswa' => 'mimes:image/jpg,image/png,jpg,png|max:2048'
+            'foto_siswa' => 'mimes:jpg,png, jpeg|max:2048'
         ];
     }
 
