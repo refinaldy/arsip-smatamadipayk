@@ -15,10 +15,11 @@ class AchievementResource extends JsonResource
     public function toArray($request)
     {
         $documentations = explode(',',  $this->achievement_documentations);
-        $documentationsURL = array();
+        $url = array();
         foreach ($documentations as $doc) {
-            array_push($documentationsURL, secure_asset('/images/achievement_documentation/' . $doc));
+            array_push($url, secure_asset('/images/achievement_documentation/' . $doc));
         }
+        $documentationsURL = implode(',', $url);
 
 
         return [
