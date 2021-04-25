@@ -62,11 +62,12 @@ class AchievementController extends Controller
         }
 
         $files = [];
+        $eventDate = explode('/', request('tanggal_acara'));
         if ($request->hasFile('dokumentasi')) {
             $i = 0;
             foreach ($request->file('dokumentasi') as $docs) {
-                $name = 'dokumentasi-' . request('nama_acara') . '-' . request('tanggal_acara') . '-' . Str::slug(strtolower(request('penyelenggara')), '-') . '-' . $i .  '.'  . $docs->extension();
-                $docs->move(public_path('images/achievement_documentation'), $name);
+                $name = 'dokumentasi-' . Str::slug(strtolower(request('nama_acara')), '-') . '-' . $eventDate[2] . '-' . Str::slug(strtolower(request('penyelenggara')), '-') . '-' . $i .  '.'  . $docs->extension();
+                $docs->move(public_path('images/achievement_documentation/'), $name);
                 $files[] = $name;
                 $i++;
             }
@@ -75,8 +76,8 @@ class AchievementController extends Controller
         $charterName  = null;
         if (isset($request->piagam)) {
             $charter = request('piagam');
-            $charterName = 'piagam-' . request('nama_acara') . '-' . request('tanggal_acara') . '-' . Str::slug(request('penyelenggara'), '-') . '.' . $charter->extension();
-            $charter->move(public_path('images/achievements_charter'), $charterName);
+            $charterName = 'piagam-' . Str::slug(strtolower(request('nama_acara')), '-') . '-' . request('tanggal_acara') . '-' . Str::slug(request('penyelenggara'), '-') . '.' . $charter->extension();
+            $charter->move(public_path('images/achievements_charter/'), $charterName);
         }
 
         $slug = 'prestasi-' . Str::slug(request('nama_acara'), '-') . '-' . Str::slug(request('penyelenggara'), '-') . '-' . Str::slug(request('tanggal_acara'), '-');
@@ -187,11 +188,12 @@ class AchievementController extends Controller
         }
 
         $files = [];
+        $eventDate = explode('/', request('tanggal_acara'));
         if ($request->hasFile('dokumentasi')) {
             $i = 0;
             foreach ($request->file('dokumentasi') as $docs) {
-                $name = 'dokumentasi-' . request('nama_acara') . '-' . request('tanggal_acara') . '-' . Str::slug(strtolower(request('penyelenggara')), '-') . '-' . $i .  '.'  . $docs->extension();
-                $docs->move(public_path('images/achievement_documentation'), $name);
+                $name = 'dokumentasi-' . Str::slug(strtolower(request('nama_acara')), '-') . '-' . $eventDate[2] . '-' . Str::slug(strtolower(request('penyelenggara')), '-') . '-' . $i .  '.'  . $docs->extension();
+                $docs->move(public_path('images/achievement_documentation/'), $name);
                 $files[] = $name;
                 $i++;
             }
@@ -200,8 +202,8 @@ class AchievementController extends Controller
         $charterName  = null;
         if (isset($request->piagam)) {
             $charter = request('piagam');
-            $charterName = 'piagam-' . request('nama_acara') . '-' . request('tanggal_acara') . '-' . Str::slug(request('penyelenggara'), '-') . '.' . $charter->extension();
-            $charter->move(public_path('images/achievements_charter'), $charterName);
+            $charterName = 'piagam-' . Str::slug(strtolower(request('nama_acara')), '-') . '-' . $eventDate[2] . '-' . Str::slug(request('penyelenggara'), '-') . '.' . $charter->extension();
+            $charter->move(public_path('images/achievements_charter/'), $charterName);
         }
 
         $achievement = Achievement::find($id);
