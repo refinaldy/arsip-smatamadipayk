@@ -20,7 +20,7 @@ class AchievementResource extends JsonResource
             array_push($url, secure_asset('/images/achievement_documentation/' . $doc));
         }
         $documentationsURL = implode(',', $url);
-        $charterURL = secure_asset('images/achievements_charter/' . $this->achievement_charter)
+        $charterURL = secure_asset('images/achievements_charter/' . $this->achievement_charter);
 
         return [
             'id' => $this->id,
