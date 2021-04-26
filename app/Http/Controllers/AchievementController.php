@@ -310,13 +310,26 @@ class AchievementController extends Controller
     public function countAchievement()
     {
 
-        $data = ['jumlah_prestasi' => Achievement::all()->count()];
+        $achievement = Achievement::get();
 
+        $achievementCategories = AchievementCategory::withCount('achievements')->get();
+
+        foreach ($achievementCategories as $achievementCategory) {
+            $arr = [
+                'kategori' => $achievementCategory->category,
+                'total' => $achievementCategory->achievements_count
+            ];
+        }
+
+        $achievementData = [
+            'jumlah_prestasi' => $achievement->count(),
+            'detail_jumlah' => $arr
+        ];
         return response()->json([
             'status' => 'success',
             'kode' => '200',
             'pesan' => 'Data berhasil didapatkan',
-            'data' => $data
+            'data' => $achievementData
         ], 200);
     }
 }

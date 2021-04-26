@@ -22,6 +22,9 @@ class AcademicYearController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+
+
     public function index()
     {
         $academicYears = AcademicYearResource::collection(AcademicYear::withCount('students')->get());
