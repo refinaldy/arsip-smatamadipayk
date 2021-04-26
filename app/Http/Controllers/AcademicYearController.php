@@ -24,7 +24,7 @@ class AcademicYearController extends Controller
      */
     public function index()
     {
-        $academicYears = AcademicYearResource::collection(AcademicYear::all());
+        $academicYears = AcademicYearResource::collection(AcademicYear::withCount('students')->get());
         $tempMessages = 'Berhasil mendapatkan detail data tahun akademik ';
         $messages = $this->getSuccessMessages('SUCCESS', $tempMessages, 200);
         $messages['data'] = $academicYears;
