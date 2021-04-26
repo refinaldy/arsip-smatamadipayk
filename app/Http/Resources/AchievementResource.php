@@ -20,7 +20,7 @@ class AchievementResource extends JsonResource
             array_push($url, secure_asset('/images/achievement_documentation/' . $doc));
         }
         $documentationsURL = implode(',', $url);
-
+        $charterURL = secure_asset('images/achievements_charter/' . $this->achievement_charter)
 
         return [
             'id' => $this->id,
@@ -30,7 +30,7 @@ class AchievementResource extends JsonResource
             'slug' => $this->slug,
             'dokumentasi_acara' => $this->achievement_documentations,
             'link_dokumentasi' => $documentationsURL,
-            'piagam' => $this->achievement_charter,
+            'link_piagam' => $charterURL,
             'kategori_juara' => $this->achievement_rank->rank,
             'kategori_lomba' => $this->achievement_category->category,
             'siswa' => $this->students
