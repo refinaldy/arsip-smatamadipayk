@@ -54,7 +54,8 @@ class AchievementController extends Controller
             'id_juara' => 'required',
             'id_kategori' => 'required',
             'dokumentasi' => 'array',
-            'dokumentasi.*' => 'image'
+            'dokumentasi.*' => 'image',
+            'piagam' => 'mimes:png, jpg, jpeg, pdf'
         ]);
 
         if ($validator->fails()) {
@@ -76,7 +77,7 @@ class AchievementController extends Controller
         $charterName  = null;
         if (isset($request->piagam)) {
             $charter = request('piagam');
-            $charterName = 'piagam-' . Str::slug(strtolower(request('nama_acara')), '-') . '-' . request('tanggal_acara') . '-' . Str::slug(request('penyelenggara'), '-') . '.' . $charter->extension();
+            $charterName = 'piagam-' . Str::slug(strtolower(request('nama_acara')), '-') . '-' . $eventDate[2] . '-' . Str::slug(request('penyelenggara'), '-') . '.' . $charter->extension();
             $charter->move(public_path('images/achievements_charter/'), $charterName);
         }
 
