@@ -324,10 +324,10 @@ class AchievementController extends Controller
         $achievementCategories = AchievementCategory::withCount('achievements')->get();
 
         foreach ($achievementCategories as $achievementCategory) {
-            $arr = [
+            array_push($arr, [
                 'kategori' => $achievementCategory->category,
                 'total' => $achievementCategory->achievements_count
-            ];
+            ]);
         }
 
         $achievementData = [
