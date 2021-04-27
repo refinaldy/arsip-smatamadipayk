@@ -111,7 +111,11 @@ class AchievementController extends Controller
             $studentId = explode(',', $request->id_siswa);
 
             foreach ($studentId as $student) {
-                $studentData = Student::findOrFail($student);
+                $studentData = Student::find($student);
+                if ($studentData === null) {
+                    $achievement->delete();
+                    return response()->json(['messages' => 'Salah satu siswa yang dipilih tidak ditemukan'], 404);
+                }
                 $studentData->achievements()->attach($achievementId);
                 $arr[] = $studentData->full_name;
             }
@@ -121,6 +125,10 @@ class AchievementController extends Controller
             $studentId = explode(',', $request->nisn_siswa);
             foreach ($studentId as $student) {
                 $studentData = Student::where('nisn', $student)->get()->first();
+                if ($studentData === null) {
+                    $achievement->delete();
+                    return response()->json(['messages' => 'Salah satu siswa yang dipilih tidak ditemukan'], 404);
+                }
                 $studentData->achievements()->attach($achievementId);
                 $arr[] = $studentData->full_name;
             }
