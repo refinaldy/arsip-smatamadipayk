@@ -109,8 +109,9 @@ class AchievementController extends Controller
         $achievementId = $achievement->id;
         if (isset($request->id_siswa)) {
             $studentId = explode(',', $request->id_siswa);
+
             foreach ($studentId as $student) {
-                $studentData = Student::findOrFail($request->id_siswa);
+                $studentData = Student::findOrFail($student);
                 $studentData->achievements()->attach($achievementId);
                 $arr[] = $studentData->full_name;
             }
